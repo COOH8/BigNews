@@ -40,5 +40,29 @@
   </div>
 
 </body>
-
 </html>
+<script>
+  $(function(){
+    $('.login_form').on('submit',function(e){
+      e.preventDefault()
+      let username = $('.input_txt').val().trim()
+      let password = $('.input_pass').val().trim()
+      $.ajax({
+        method:"post",
+        url:"http://localhost:8080/api/v1/admin/user/login",
+        data:{
+          "username":username,
+          "password":password
+        },
+        success:function(result){
+          //当code为200时表示登录成功
+          if(result.code=="200"){
+            location.href = "./index.html"
+          }else{
+            alert(result.msg)
+          }
+        }
+      })
+    })
+  })
+</script>
