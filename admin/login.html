@@ -84,6 +84,8 @@
           $('#myModal').on('hidden.bs.modal', function () {
             //当code为200时表示登录成功
             if (result.code == "200") {
+              //此处需要存储token
+              localStorage.setItem('token',result.token)
               location.href = "./index.html"
             } else {
               $('.input_txt').val('')

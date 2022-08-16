@@ -62,5 +62,42 @@
         </div>
     </div>
 </body>
-
 </html>
+<script>
+    //为了防止重复的使用，添加Ajax的BeforeSend，在所有的Ajax前添加header
+    //但是这个只能单页面的使用，如何配置全局的使用？
+    // $.ajaxSetup({
+    //     beforeSend:function(xhr){
+    //         xhr.setRequestHeader('authorization',localStorage.getItem('token'))
+    //     }
+    // })
+
+    //对获取到的token存到headers完成验证
+    (function(){
+        $.ajax({
+        type:"get",
+        url:"http://localhost:8080/api/v1/admin/user/info",
+        // headers:{
+        //     'authorization':localStorage.getItem('token')
+        // },
+        success:function(result){
+            // console.log(result);
+            //将返回的数据进行回显
+            if(result.code=="200"){
+                $('.user_info img').attr('src',result.data.userPic)
+                $('.user_center_link img').attr('src',result.data.userPic)
+                $('.user_info span').html("欢迎&nbsp;&nbsp;"+result.data.nickname)
+            }
+        }
+    })
+    })();
+    //退出登录的功能
+    (function(){
+        //退出登录的话需要删除token，退出到index页面
+        //触发点击事件
+        $('.logout').on('click',function () {
+            localStorage.removeItem('token')
+            location.href = "./login.html"
+        })
+    })();
+</script>
